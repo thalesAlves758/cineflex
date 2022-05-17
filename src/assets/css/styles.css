@@ -1,5 +1,60 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+:root {
+  --tigers-eye: #E8833A;
+  --light-periwinkle: #C3CFD9;
+  --white: #FFFFFF;
+  --outer-space: #293845;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
+  background-color: var(--white);
+}
+
+header {
+  font-size: 34px;
+  color: var(--tigers-eye);
+  text-align: center;
+  height: 68px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--light-periwinkle);
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  color: var(--outer-space);
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 110px;
+}
+
+.movies {
+  margin: 0 30px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.movie {
+  width: 146px;
+  height: 210px;
+  padding: 8px;
+  background-color: var(--white);
+  box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+
+.movie img {
+  width: 100%;
+  height: 100%;
 }
