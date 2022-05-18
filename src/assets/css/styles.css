@@ -7,6 +7,15 @@
   --outer-space: #293845;
   --cadet-blue: #9EADBA;
   --azureish-white: #DFE6ED;
+  --myrtle-green: #247A6B;
+  --roman-silver: #808F9D;
+  --flavescent: #FBE192;
+  --saffron: #F7C52B;
+  --middle-blue-green: #8DD7CF;
+  --verdigris: #45BDB0;
+  --independence: #4E5A65;
+  --silver-foil: #AFAFAF;
+  --light-gray: #D4D4D4;
 }
 
 body {
@@ -28,6 +37,21 @@ header {
 main {
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
+
+main.margin-bottom {
+  margin-bottom: 136px;
+}
+
+button.btn-primary {
+  width: 226px;
+  height: 42px;
+  background-color: var(--tigers-eye);
+  border-radius: 3px;
+  border: none;
+  font-size: 18px;
+  color: var(--white);
 }
 
 .title {
@@ -40,7 +64,7 @@ main {
 }
 
 .movies {
-  margin: 0 30px;
+  width: 322px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -69,7 +93,7 @@ main {
 }
 
 .sessions {
-  margin: 0 24px;
+  width: 322px;
   display: flex;
   flex-direction: column;
 }
@@ -92,13 +116,7 @@ main {
 
 .showtimes button {
   width: calc(25% - 8px);
-  height: 42px;
   margin-bottom: 8px;
-  background-color: var(--tigers-eye);
-  border-radius: 3px;
-  border: none;
-  font-size: 18px;
-  color: var(--white);
 }
 
 footer {
@@ -111,15 +129,100 @@ footer {
   position: fixed;
   bottom: 0;
   left: 0;
-  padding: 10px;
+  padding: 10px 30px;
 }
 
 .session-info {
-  width: 100%;
   margin-left: 22px;
   font-size: 22px;
   color: var(--outer-space);
   display: flex;
   flex-direction: column;
   line-height: 30px;
+}
+
+.seats {
+  width: 328px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+.seat {
+  width: 26px;
+  height: 26px;
+  background-color: var(--light-periwinkle);
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  border: 1px solid var(--roman-silver);
+}
+
+.seat.unavailable {
+  background-color: var(--flavescent);
+  border-color: var(--saffron);
+}
+
+.seat.selected {
+  background-color: var(--middle-blue-green);
+  background-color: var(--verdigris);
+}
+
+.seat-labels {
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--independence);
+  line-height: 16px;
+  width: 256px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.reservation-form {
+  margin-top: 42px;
+  display: flex;
+  flex-direction: column;
+  width: 328px;
+}
+
+.reservation-form button {
+  margin: 50px auto 0;
+}
+
+.form-input {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+}
+
+.form-input label {
+  font-size: 18px;
+  color: var(--outer-space);
+  line-height: 22px;
+}
+
+.form-input input {
+  height: 52px;
+  background-color: var(--white);
+  outline: none;
+  border-radius: 3px;
+  font-size: 18px;
+  line-height: 22px;
+  padding: 0 18px;
+  color: var(--outer-space);
+  border: 1px solid var(--light-gray);
+}
+
+.form-input input::placeholder {
+  color: var(--silver-foil);
+  font-style: italic;
 }
