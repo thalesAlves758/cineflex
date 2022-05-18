@@ -1,6 +1,6 @@
-export default function Movie ({ image, title }) {
+export default function Movie ({ id = null, image, title, small = false }) {
   return (
-    <div className="movie">
+    <div className={`movie ${small ? 'small' : ''}`}>
       <img src={image} alt={title} />
     </div>
   );
