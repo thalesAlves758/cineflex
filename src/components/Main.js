@@ -1,6 +1,6 @@
-export default function Main ({ children, withMarginBottom = false }) {
+export default function Main ({ children }) {
   return (
-    <main className={`${withMarginBottom ? 'margin-bottom' : ''}`}>
+    <main>
       { children }
     </main>
   );
