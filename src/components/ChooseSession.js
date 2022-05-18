@@ -10,7 +10,7 @@ import showtimes from "../data/showtimes";
 export default function ChooseSession() {
   return (
     <>
-      <Main>
+      <Main withMarginBottom={true}>
         <Title>
           Selecione o horário
         </Title>
