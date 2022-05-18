@@ -1,6 +1,6 @@
 function ButtonTime({ id, name }) {
   return (
-    <button className="time">
+    <button className="time btn-primary">
       { name }
     </button>
   );
