@@ -11,10 +11,7 @@ import ReservationInfo from "./ReservationInfo";
 
 const ELEVEN = 11;
 
-function ReservationForm () {
-  const [name, setName] = useState('');
-  const [cpf, setCpf] = useState('');
-
+function ReservationForm ({ name, setName, cpf, setCpf, reserve }) {
   function handleNameInput(event) {
     setName(event.target.value);
   }
@@ -42,7 +39,7 @@ function ReservationForm () {
         <input value={cpf} onChange={handleCpfInput} type="text" placeholder="Digite seu CPF..." />
       </div>
 
-      <button className="btn-primary">Reservar assento(s)</button>
+      <button onClick={reserve} className="btn-primary">Reservar assento(s)</button>
     </div>
   );
 }
@@ -73,6 +70,10 @@ export default function ChooseSeat () {
   const [movie, setMovie] = useState({});
   const [session, setSession] = useState({});
 
+  const [idSeats, setIdSeats] = useState([]);
+  const [name, setName] = useState('');
+  const [cpf, setCpf] = useState('');
+
   const { idSessao } = useParams();
 
   useEffect(() => {
@@ -87,6 +88,18 @@ export default function ChooseSeat () {
       });
   }, []);
 
+  function reserve() {
+    axios
+      .post('https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many', {
+        ids: idSeats,
+        name,
+        cpf
+      })
+      .then(response => {
+        console.log(response.status);
+      });
+  }
+
   return (
     <>
       <Main withMarginBottom={true}>
@@ -97,15 +110,24 @@ export default function ChooseSeat () {
           { seats.map((seat, index) => (
             <Seat
               key={index}
+              id={seat.id}
               isAvailable={seat.isAvailable}
               name={seat.name}
+              idSeats={idSeats}
+              setIdSeats={setIdSeats}
             />
           )) }
         </Seats>
         
         <SeatLabels />
 
-        <ReservationForm />
+        <ReservationForm
+          name={name}
+          setName={setName}
+          cpf={cpf}
+          setCpf={setCpf}
+          reserve={reserve}
+        />
       </Main>
       <Footer>
         <ReservationInfo

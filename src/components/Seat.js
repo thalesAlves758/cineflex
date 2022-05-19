@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 const TWO = 2;
 
-export default function Seat({ name = null, isAvailable, selectedSeat = false }) {
+export default function Seat({ id = null, name = null, isAvailable, selectedSeat = false, idSeats, setIdSeats }) {
   const [selected, setSelected] = useState(selectedSeat);
 
   function handleClick() {
@@ -11,7 +11,13 @@ export default function Seat({ name = null, isAvailable, selectedSeat = false })
       return;
     }
 
-    setSelected(!selected);
+    if(!selected) {
+      setSelected(true);
+      setIdSeats([...idSeats, id]);
+    } else {
+      setSelected(false);
+      setIdSeats(idSeats.filter(idSeat => idSeat !== id));
+    }
   }
 
   const addPadLeft = str => str ? str.padStart(TWO, '0') : null;
