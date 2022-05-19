@@ -1,6 +1,6 @@
-export default function Title({ children }) {
+export default function Title({ children, greenColor = false }) {
   return (
-    <div className="title">
+    <div className={`title ${greenColor ? 'green' : ''}`}>
       { children }
     </div>
   );

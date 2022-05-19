@@ -63,6 +63,11 @@ button.btn-primary {
   height: 110px;
 }
 
+.title.green {
+  color: var(--myrtle-green);
+  font-weight: 700;
+}
+
 .movies {
   width: 322px;
   display: flex;
@@ -225,4 +230,27 @@ footer {
 .form-input input::placeholder {
   color: var(--silver-foil);
   font-style: italic;
+}
+
+.informations {
+  width: 328px;
+  display: flex;
+  flex-direction: column;
+  color: var(--outer-space);
+  gap: 36px;
+}
+
+.informations > div h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.informations .info {
+  font-size: 22px;
+  line-height: 26px;
+}
+
+.success-button button {
+  margin-top: 62px;
 }
