@@ -13,7 +13,7 @@ export default function App() {
         <Header />
         <Routes>
           <Route path='/' element={<ChooseMovie />} />
-          {/* <ChooseSession /> */}
+          <Route path='/sessoes/:idFilme' element={<ChooseSession />} />
           {/* <ChooseSeat /> */}
           {/* <Success /> */}
         </Routes>

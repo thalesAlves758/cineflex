@@ -1,3 +1,7 @@
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+
 import Main from "./Main";
 import Title from "./Title";
 import Sessions from "./Sessions";
@@ -5,9 +9,23 @@ import Session from "./Session";
 import Footer from "./Footer";
 import ReservationInfo from "./ReservationInfo";
 
-import showtimes from "../data/showtimes";
-
 export default function ChooseSession() {
+  const [movie, setMovie] = useState({});
+  const [days, setDays] = useState([]);
+
+  const { idFilme } = useParams();
+
+  useEffect(() => {
+    axios
+      .get(`https://mock-api.driven.com.br/api/v5/cineflex/movies/${idFilme}/showtimes`)
+      .then(({ data }) => {
+        const { posterURL, title, days } = data;
+        
+        setMovie({ posterURL, title });
+        setDays([...days]);
+      });
+  }, []);
+
   return (
     <>
       <Main withMarginBottom={true}>
@@ -15,7 +33,7 @@ export default function ChooseSession() {
           Selecione o horário
         </Title>
         <Sessions>
-          { showtimes.days.map((day, index) => (
+          { days.map((day, index) => (
             <Session
               key={index}
               weekday={day.weekday}
@@ -26,7 +44,7 @@ export default function ChooseSession() {
         </Sessions>
       </Main>
       <Footer>
-        <ReservationInfo image={showtimes.posterURL} title={showtimes.title} />
+        <ReservationInfo image={movie.posterURL} title={movie.title} />
       </Footer>
     </>
   );
