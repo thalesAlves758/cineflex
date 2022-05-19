@@ -1,7 +1,11 @@
+import { Link } from 'react-router-dom';
+
 function ButtonTime({ id, name }) {
   return (
     <button className="time btn-primary">
-      { name }
+      <Link to={`/assentos/${id}`}>
+        { name }
+      </Link>
     </button>
   );
 }
