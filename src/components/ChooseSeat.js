@@ -31,7 +31,7 @@ function SeatLabels () {
   return (
     <div className="seat-labels">
       <div className="label">
-        <Seat isAvailable={true} selected={true} />
+        <Seat isAvailable={true} selectedSeat={true} />
         <h3>Selecionado</h3>
       </div>
 
