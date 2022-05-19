@@ -1,4 +1,4 @@
-export default function ({ children, isTrue }) {
+export default function RenderIf({ children, isTrue }) {
   return (
     <>
       { isTrue ? children : null }
