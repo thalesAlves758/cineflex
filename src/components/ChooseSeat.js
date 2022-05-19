@@ -9,17 +9,37 @@ import Seat from "./Seat";
 import Footer from "./Footer";
 import ReservationInfo from "./ReservationInfo";
 
+const ELEVEN = 11;
+
 function ReservationForm () {
+  const [name, setName] = useState('');
+  const [cpf, setCpf] = useState('');
+
+  function handleNameInput(event) {
+    setName(event.target.value);
+  }
+
+  function handleCpfInput(event) {
+    const onlyNumberRegex = /^[0-9]+$/;
+    const { value } = event.target;
+
+    const isValidValue = () => (value === '' || onlyNumberRegex.test(value)) && value.length <= ELEVEN;
+    
+    if(isValidValue()) {
+      setCpf(value);
+    }
+  }
+
   return (
     <div className="reservation-form">
       <div className="form-input">
         <label>Nome do comprador:</label>
-        <input type="text" placeholder="Digite seu nome..." />
+        <input value={name} onChange={handleNameInput} type="text" placeholder="Digite seu nome..." />
       </div>
 
       <div className="form-input">
         <label>CPF do comprador:</label>
-        <input type="text" placeholder="Digite seu CPF..." />
+        <input value={cpf} onChange={handleCpfInput} type="text" placeholder="Digite seu CPF..." />
       </div>
 
       <button className="btn-primary">Reservar assento(s)</button>
