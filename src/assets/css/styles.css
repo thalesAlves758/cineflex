@@ -125,7 +125,7 @@ button.btn-primary {
 }
 
 .showtimes button {
-  width: calc(25% - 8px);
+  width: 82px;
   margin-bottom: 8px;
 }
 
