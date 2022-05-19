@@ -1,11 +1,13 @@
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+
 import Main from "./Main";
 import Title from "./Title";
 import Seats from "./Seats";
 import Seat from "./Seat";
 import Footer from "./Footer";
 import ReservationInfo from "./ReservationInfo";
-
-import seats from "../data/seats";
 
 function ReservationForm () {
   return (
@@ -47,6 +49,24 @@ function SeatLabels () {
 }
 
 export default function ChooseSeat () {
+  const [seats, setSeats] = useState([]);
+  const [movie, setMovie] = useState({});
+  const [session, setSession] = useState({});
+
+  const { idSessao } = useParams();
+
+  useEffect(() => {
+    axios
+      .get(`https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idSessao}/seats`)
+      .then(({ data }) => {
+        const { name, day: { weekday, date }, movie, seats } = data;
+
+        setSeats([...seats]);
+        setMovie({...movie});
+        setSession({ name, weekday, date });
+      });
+  }, []);
+
   return (
     <>
       <Main withMarginBottom={true}>
@@ -54,7 +74,7 @@ export default function ChooseSeat () {
           Selecione o(s) assento(s)
         </Title>
         <Seats>
-          { seats.seats.map((seat, index) => (
+          { seats.map((seat, index) => (
             <Seat
               key={index}
               isAvailable={seat.isAvailable}
@@ -69,9 +89,9 @@ export default function ChooseSeat () {
       </Main>
       <Footer>
         <ReservationInfo
-          image={seats.movie.posterURL}
-          title={seats.movie.title}
-          sessionDatetime={`${seats.day.weekday} - ${seats.name}`}
+          image={movie.posterURL}
+          title={movie.title}
+          sessionDatetime={`${session.weekday} - ${session.name}`}
         />
       </Footer>
     </>
