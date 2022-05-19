@@ -23,6 +23,11 @@ body {
   background-color: var(--white);
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 header {
   font-size: 34px;
   color: var(--tigers-eye);
