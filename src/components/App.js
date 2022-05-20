@@ -15,8 +15,6 @@ export default function App() {
     seats: [],
     session: {},
   });
-  
-  console.log(reservation);
 
   return (
     <>
