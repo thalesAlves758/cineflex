@@ -10,12 +10,13 @@ export default function Header() {
 
   return (
     <header>
+      <RenderIf isTrue={location.pathname !== '/'}>
+        <Button onClick={() => navigate(MINUS_ONE)}>
+          Voltar
+        </Button>
+      </RenderIf>
+
       <Link to={'/'}>
-        <RenderIf isTrue={location.pathname !== '/'}>
-          <Button onClick={() => navigate(MINUS_ONE)}>
-            Voltar
-          </Button>
-        </RenderIf>
         <div className="logo">
           CINEFLEX
         </div>
