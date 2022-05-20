@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import Main from "./Main";
 import Title from "./Title";
@@ -72,16 +72,17 @@ function SeatLabels () {
   );
 }
 
-export default function ChooseSeat () {
+export default function ChooseSeat ({ setReservation }) {
   const [seats, setSeats] = useState([]);
   const [movie, setMovie] = useState({});
   const [session, setSession] = useState({});
 
-  const [idSeats, setIdSeats] = useState([]);
+  const [selectedSeats, setSelectedSeats] = useState([]);
   const [name, setName] = useState('');
   const [cpf, setCpf] = useState('');
 
   const { idSessao } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -96,14 +97,15 @@ export default function ChooseSeat () {
   }, []);
 
   function reserve() {
+    const ids = selectedSeats.map(seat => seat.id);
+    const seats = selectedSeats.map(seat => seat.name);
+
+    setReservation({ movie, session, seats, name, cpf });
+
     axios
-      .post('https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many', {
-        ids: idSeats,
-        name,
-        cpf
-      })
-      .then(response => {
-        console.log(response.status);
+      .post('https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many', { ids, name, cpf })
+      .then(() => {
+        navigate('/sucesso', { replace: true });
       });
   }
 
@@ -120,8 +122,8 @@ export default function ChooseSeat () {
               id={seat.id}
               isAvailable={seat.isAvailable}
               name={seat.name}
-              idSeats={idSeats}
-              setIdSeats={setIdSeats}
+              selectedSeats={selectedSeats}
+              setSelectedSeats={setSelectedSeats}
             />
           )) }
         </Seats>
