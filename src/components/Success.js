@@ -17,7 +17,7 @@ export default function Success ({ reservation }) {
   }, []);
 
   return (
-    <Main>
+    <Main withMarginBottom={true}>
       <Title greenColor={true}>
         Pedido feito com sucesso!
       </Title>
