@@ -27,19 +27,26 @@ function ReservationForm ({ name, setName, cpf, setCpf, reserve }) {
     }
   }
 
+  function handleSubmit(event) {
+    event.preventDefault();
+    reserve();
+  }
+
   return (
     <div className="reservation-form">
-      <div className="form-input">
-        <label>Nome do comprador:</label>
-        <input value={name} onChange={handleNameInput} type="text" placeholder="Digite seu nome..." />
-      </div>
+      <form onSubmit={handleSubmit}>
+        <div className="form-input">
+          <label>Nome do comprador:</label>
+          <input required value={name} onChange={handleNameInput} type="text" placeholder="Digite seu nome..." />
+        </div>
 
-      <div className="form-input">
-        <label>CPF do comprador:</label>
-        <input value={cpf} onChange={handleCpfInput} type="text" placeholder="Digite seu CPF..." />
-      </div>
+        <div className="form-input">
+          <label>CPF do comprador:</label>
+          <input required value={cpf} onChange={handleCpfInput} type="text" placeholder="Digite seu CPF..." />
+        </div>
 
-      <button onClick={reserve} className="btn-primary">Reservar assento(s)</button>
+        <button type="submit" className="btn-primary">Reservar assento(s)</button>
+      </form>
     </div>
   );
 }
