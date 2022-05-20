@@ -37,6 +37,7 @@ header {
   justify-content: center;
   align-items: center;
   background-color: var(--light-periwinkle);
+  position: relative;
 }
 
 main {
@@ -49,7 +50,7 @@ main.margin-bottom {
   margin-bottom: 136px;
 }
 
-button.btn-primary {
+.btn-primary {
   width: 226px;
   height: 42px;
   background-color: var(--tigers-eye);
@@ -57,6 +58,13 @@ button.btn-primary {
   border: none;
   font-size: 18px;
   color: var(--white);
+}
+
+header .btn-primary {
+  width: 76px;
+  position: absolute;
+  left: 14px;
+  top: calc(68px - (50% + 21px));
 }
 
 .title {
