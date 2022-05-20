@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import Main from "./Main";
 import Title from "./Title";
@@ -48,9 +48,11 @@ export default function Success ({ reservation }) {
       </div>
 
       <div className="success-button">
-        <Button>
-          Voltar para Home
-        </Button>
+        <Link to={`/`}>
+          <Button>
+            Voltar para Home
+          </Button>
+        </Link>
       </div>
     </Main>
   );
