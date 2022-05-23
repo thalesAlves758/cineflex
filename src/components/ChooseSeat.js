@@ -8,8 +8,11 @@ import Seats from "./Seats";
 import Seat from "./Seat";
 import Footer from "./Footer";
 import ReservationInfo from "./ReservationInfo";
+import RenderIf from "./utilities/RenderIf";
 
 import cpfMask from './utilities/cpfMask';
+
+const ZERO = 0;
 
 function ReservationInputs({ index, buyers, setBuyers }) {
   function handleNameInput(event) {
@@ -23,17 +26,18 @@ function ReservationInputs({ index, buyers, setBuyers }) {
   }
 
   return (
-    <>
+    <div className="buyer-inputs">
+      <h2>Comprador do assento {buyers[index].seatName}:</h2>
       <div className="form-input">
-        <label>Nome do comprador:</label>
+        <label>Nome:</label>
         <input required value={buyers[index].name} onChange={handleNameInput} type="text" placeholder="Digite seu nome..." />
       </div>
 
       <div className="form-input">
-        <label>CPF do comprador:</label>
+        <label>CPF:</label>
         <input required value={buyers[index].cpf} onChange={handleCpfInput} type="text" placeholder="Digite seu CPF..." />
       </div>
-    </>
+    </div>
   );
 }
 
@@ -48,7 +52,10 @@ function ReservationForm ({ children, reserve }) {
     <div className="reservation-form">
       <form onSubmit={handleSubmit}>
         { children }
-        <button type="submit" className="btn-primary">Reservar assento(s)</button>
+        
+        <RenderIf isTrue={children.length > ZERO}>
+          <button type="submit" className="btn-primary">Reservar assento(s)</button>
+        </RenderIf>
       </form>
     </div>
   );
