@@ -82,7 +82,7 @@ function SeatLabels () {
   );
 }
 
-export default function ChooseSeat ({ setReservation }) {
+export default function ChooseSeat() {
   const [seats, setSeats] = useState([]);
   const [movie, setMovie] = useState({});
   const [session, setSession] = useState({});
@@ -121,8 +121,7 @@ export default function ChooseSeat ({ setReservation }) {
     axios
       .post('https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many', getPostObject())
       .then(() => {
-          setReservation({ movie, session, buyers: [...buyers] });
-          navigate('/sucesso');
+          navigate('/sucesso', { state: { movie, session, buyers: [...buyers] } });
         });
   }
 

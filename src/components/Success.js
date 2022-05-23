@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import Main from "./Main";
 import Title from "./Title";
 import Button from "./shared/Button";
 
-export default function Success ({ reservation }) {
-  const { movie, buyers, session } = reservation;
+export default function Success () {
+  const { movie, buyers, session } = useLocation().state;
 
   return (
     <Main withMarginBottom={true}>

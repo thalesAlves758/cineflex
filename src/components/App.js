@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import Header from "./Header";
@@ -8,14 +7,6 @@ import ChooseSeat from "./ChooseSeat";
 import Success from "./Success";
 
 export default function App() {
-  const [reservation, setReservation] = useState({
-    name: '',
-    cpf: '',
-    movie: {},
-    seats: [],
-    session: {},
-  });
-
   return (
     <>
       <BrowserRouter>
@@ -25,9 +16,9 @@ export default function App() {
 
           <Route path='/sessoes/:idFilme' element={<ChooseSession />} />
 
-          <Route path='/assentos/:idSessao' element={<ChooseSeat setReservation={setReservation} />} />
+          <Route path='/assentos/:idSessao' element={<ChooseSeat />} />
 
-          <Route path='/sucesso' element={<Success reservation={reservation} />} />
+          <Route path='/sucesso' element={<Success />} />
         </Routes>
       </BrowserRouter>
     </>
