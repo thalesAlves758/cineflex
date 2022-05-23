@@ -7,7 +7,7 @@ export default function Seat({ id = null, name = null, isAvailable, selectedSeat
 
   function handleClick() {
     if(!isAvailable) {
-      alert("Esse assento não está disponível");
+      window.alert("Esse assento não está disponível");
       return;
     }
 
@@ -15,6 +15,16 @@ export default function Seat({ id = null, name = null, isAvailable, selectedSeat
       setSelected(true);
       setBuyers([...buyers, { idSeat: id, seatName: name, name: '', cpf: '' }]);
     } else {
+      const thisSeat = buyers.find(buyer => buyer.idSeat === id);
+
+      if(thisSeat && (thisSeat.name !== '' || thisSeat.cpf !== '')) {
+        const canDelete = window.confirm("Esse assento possui dados preenchidos. Deseja realmente removê-lo?");
+
+        if(!canDelete) {
+          return;
+        }
+      }
+      
       setSelected(false);
       setBuyers(buyers.filter(buyer => buyer.idSeat !== id));
     }
