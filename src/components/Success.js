@@ -1,20 +1,11 @@
-import { useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import Main from "./Main";
 import Title from "./Title";
 import Button from "./shared/Button";
 
 export default function Success ({ reservation }) {
-  const { cpf, name, movie, seats, session } = reservation;
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if(cpf === '' && name === '') {
-      navigate('/', { replace: true });
-    }
-  }, []);
+  const { movie, buyers, session } = reservation;
 
   return (
     <Main withMarginBottom={true}>
@@ -32,17 +23,15 @@ export default function Success ({ reservation }) {
         </div>
 
         <div className="tickets">
-          <h2>Ingressos</h2>
+          <h2>Ingressos e Compradores</h2>
           <div className="info">
-            { seats.map((seat, index) => <p key={index}>Assento {seat}</p>) }
-          </div>
-        </div>
-
-        <div className="buyers">
-          <h2>Comprador</h2>
-          <div className="info">
-            <p>Nome: { name }</p>
-            <p>CPF: { cpf }</p>
+            { buyers.map((buyer, index) => (
+              <div key={index} className="buyer">
+                <p>Assento {buyer.seatName}:</p>
+                <p>Comprador: {buyer.name}</p>
+                <p>CPF: {buyer.cpf}</p>
+              </div>
+            )) }
           </div>
         </div>
       </div>

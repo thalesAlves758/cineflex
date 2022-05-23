@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 const TWO = 2;
 
-export default function Seat({ id = null, name = null, isAvailable, selectedSeat = false, selectedSeats, setSelectedSeats }) {
+export default function Seat({ id = null, name = null, isAvailable, selectedSeat = false, buyers, setBuyers }) {
   const [selected, setSelected] = useState(selectedSeat);
 
   function handleClick() {
@@ -13,10 +13,10 @@ export default function Seat({ id = null, name = null, isAvailable, selectedSeat
 
     if(!selected) {
       setSelected(true);
-      setSelectedSeats([...selectedSeats, { id, name }]);
+      setBuyers([...buyers, { idSeat: id, seatName: name, name: '', cpf: '' }]);
     } else {
       setSelected(false);
-      setSelectedSeats(selectedSeats.filter(seat => seat.id !== id));
+      setBuyers(buyers.filter(buyer => buyer.idSeat !== id));
     }
   }
 

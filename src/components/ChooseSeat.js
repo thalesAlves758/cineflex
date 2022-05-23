@@ -11,38 +11,43 @@ import ReservationInfo from "./ReservationInfo";
 
 import cpfMask from './utilities/cpfMask';
 
-function ReservationForm ({ name, setName, cpf, setCpf, reserve }) {
+function ReservationInputs({ index, buyers, setBuyers }) {
   function handleNameInput(event) {
-    setName(event.target.value);
+    buyers[index].name = event.target.value;
+    setBuyers([...buyers]);
   }
 
   function handleCpfInput(event) {
-    setCpf(cpfMask(event.target.value));
+    buyers[index].cpf = cpfMask(event.target.value);
+    setBuyers([...buyers]);
   }
 
+  return (
+    <>
+      <div className="form-input">
+        <label>Nome do comprador:</label>
+        <input required value={buyers[index].name} onChange={handleNameInput} type="text" placeholder="Digite seu nome..." />
+      </div>
+
+      <div className="form-input">
+        <label>CPF do comprador:</label>
+        <input required value={buyers[index].cpf} onChange={handleCpfInput} type="text" placeholder="Digite seu CPF..." />
+      </div>
+    </>
+  );
+}
+
+function ReservationForm ({ children, reserve }) {
   function handleSubmit(event) {
     event.preventDefault();
-
-    setCpf(removeCpfMask(cpf));
 
     reserve();
   }
 
-  const removeCpfMask = value => value.replaceAll('.', '').replaceAll('-', '');
-
   return (
     <div className="reservation-form">
       <form onSubmit={handleSubmit}>
-        <div className="form-input">
-          <label>Nome do comprador:</label>
-          <input required value={name} onChange={handleNameInput} type="text" placeholder="Digite seu nome..." />
-        </div>
-
-        <div className="form-input">
-          <label>CPF do comprador:</label>
-          <input required value={cpf} onChange={handleCpfInput} type="text" placeholder="Digite seu CPF..." />
-        </div>
-
+        { children }
         <button type="submit" className="btn-primary">Reservar assento(s)</button>
       </form>
     </div>
@@ -75,9 +80,7 @@ export default function ChooseSeat ({ setReservation }) {
   const [movie, setMovie] = useState({});
   const [session, setSession] = useState({});
 
-  const [selectedSeats, setSelectedSeats] = useState([]);
-  const [name, setName] = useState('');
-  const [cpf, setCpf] = useState('');
+  const [buyers, setBuyers] = useState([]);
 
   const { idSessao } = useParams();
   const navigate = useNavigate();
@@ -94,16 +97,26 @@ export default function ChooseSeat ({ setReservation }) {
       });
   }, []);
 
-  function reserve() {
-    const ids = selectedSeats.map(seat => seat.id);
-    const seats = selectedSeats.map(seat => seat.name);
+  const removeCpfMask = value => value.replaceAll('.', '').replaceAll('-', '');
 
+  function getPostObject() {
+    return {
+      ids: buyers.map(buyer => buyer.idSeat),
+      compradores: buyers.map(buyer => ({
+        idAssento: buyer.idSeat,
+        nome: buyer.name,
+        cpf: removeCpfMask(buyer.cpf)
+      })),
+    };
+  }
+
+  function reserve() {
     axios
-    .post('https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many', { ids, name, cpf })
-    .then(() => {
-        setReservation({ movie, session, seats, name, cpf });
-        navigate('/sucesso', { replace: true });
-      });
+      .post('https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many', getPostObject())
+      .then(() => {
+          setReservation({ movie, session, buyers: [...buyers] });
+          navigate('/sucesso', { replace: true });
+        });
   }
 
   return (
@@ -119,21 +132,24 @@ export default function ChooseSeat ({ setReservation }) {
               id={seat.id}
               isAvailable={seat.isAvailable}
               name={seat.name}
-              selectedSeats={selectedSeats}
-              setSelectedSeats={setSelectedSeats}
+              buyers={buyers}
+              setBuyers={setBuyers}
             />
           )) }
         </Seats>
-        
+          
         <SeatLabels />
 
-        <ReservationForm
-          name={name}
-          setName={setName}
-          cpf={cpf}
-          setCpf={setCpf}
-          reserve={reserve}
-        />
+        <ReservationForm reserve={reserve}>
+          { buyers.map((buyer, index) => (
+            <ReservationInputs
+              key={index}
+              index={index}
+              buyers={buyers}
+              setBuyers={setBuyers}
+            />
+          )) }
+        </ReservationForm>
       </Main>
       <Footer>
         <ReservationInfo
