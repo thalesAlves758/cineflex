@@ -9,6 +9,7 @@ import Seat from "./Seat";
 import Footer from "./Footer";
 import ReservationInfo from "./ReservationInfo";
 import RenderIf from "./utilities/RenderIf";
+import Button from "./shared/Button";
 
 import cpfMask from './utilities/cpfMask';
 
@@ -54,7 +55,7 @@ function ReservationForm ({ children, reserve }) {
         { children }
         
         <RenderIf isTrue={children.length > ZERO}>
-          <button type="submit" className="btn-primary">Reservar assento(s)</button>
+          <Button type="submit">Reservar assento(s)</Button>
         </RenderIf>
       </form>
     </div>

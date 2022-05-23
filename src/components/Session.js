@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
+import Button from './shared/Button';
 
 function ButtonTime({ id, name }) {
   return (
     <Link to={`/assentos/${id}`}>
-      <button className="time btn-primary">
+      <Button>
         { name }
-      </button>
+      </Button>
     </Link>
   );
 }
