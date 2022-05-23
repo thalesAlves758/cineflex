@@ -122,7 +122,7 @@ export default function ChooseSeat ({ setReservation }) {
       .post('https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many', getPostObject())
       .then(() => {
           setReservation({ movie, session, buyers: [...buyers] });
-          navigate('/sucesso', { replace: true });
+          navigate('/sucesso');
         });
   }
 
