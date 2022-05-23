@@ -10,6 +10,7 @@ import Footer from "./Footer";
 import ReservationInfo from "./ReservationInfo";
 import RenderIf from "./utilities/RenderIf";
 import Button from "./shared/Button";
+import Loading from "./shared/Loading";
 
 import cpfMask from './utilities/cpfMask';
 
@@ -84,6 +85,9 @@ function SeatLabels () {
 }
 
 export default function ChooseSeat() {
+  const [loaded, setLoaded] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   const [seats, setSeats] = useState([]);
   const [movie, setMovie] = useState({});
   const [session, setSession] = useState({});
@@ -102,6 +106,9 @@ export default function ChooseSeat() {
         setSeats([...seats]);
         setMovie({...movie});
         setSession({ name, weekday, date });
+
+        setLoading(false);
+        setLoaded(true);
       });
   }, []);
 
@@ -128,43 +135,49 @@ export default function ChooseSeat() {
 
   return (
     <>
-      <Main withMarginBottom={true}>
-        <Title>
-          Selecione o(s) assento(s)
-        </Title>
-        <Seats>
-          { seats.map((seat, index) => (
-            <Seat
-              key={index}
-              id={seat.id}
-              isAvailable={seat.isAvailable}
-              name={seat.name}
-              buyers={buyers}
-              setBuyers={setBuyers}
-            />
-          )) }
-        </Seats>
-          
-        <SeatLabels />
+      <RenderIf isTrue={loading}>
+        <Loading />
+      </RenderIf>
 
-        <ReservationForm reserve={reserve}>
-          { buyers.map((buyer, index) => (
-            <ReservationInputs
-              key={index}
-              index={index}
-              buyers={buyers}
-              setBuyers={setBuyers}
-            />
-          )) }
-        </ReservationForm>
-      </Main>
-      <Footer>
-        <ReservationInfo
-          image={movie.posterURL}
-          title={movie.title}
-          sessionDatetime={`${session.weekday} - ${session.name}`}
-        />
-      </Footer>
+      <RenderIf isTrue={loaded}>
+        <Main withMarginBottom={true}>
+          <Title>
+            Selecione o(s) assento(s)
+          </Title>
+          <Seats>
+            { seats.map((seat, index) => (
+              <Seat
+                key={index}
+                id={seat.id}
+                isAvailable={seat.isAvailable}
+                name={seat.name}
+                buyers={buyers}
+                setBuyers={setBuyers}
+              />
+            )) }
+          </Seats>
+            
+          <SeatLabels />
+
+          <ReservationForm reserve={reserve}>
+            { buyers.map((buyer, index) => (
+              <ReservationInputs
+                key={index}
+                index={index}
+                buyers={buyers}
+                setBuyers={setBuyers}
+              />
+            )) }
+          </ReservationForm>
+        </Main>
+        <Footer>
+          <ReservationInfo
+            image={movie.posterURL}
+            title={movie.title}
+            sessionDatetime={`${session.weekday} - ${session.name}`}
+          />
+        </Footer>
+      </RenderIf>
     </>
   );
 }

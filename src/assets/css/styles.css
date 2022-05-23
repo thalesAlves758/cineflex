@@ -60,6 +60,17 @@ main.margin-bottom {
   color: var(--white);
 }
 
+.loading-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 header .btn-primary {
   width: 76px;
   position: absolute;
