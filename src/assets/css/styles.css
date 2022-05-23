@@ -277,6 +277,12 @@ footer {
   line-height: 26px;
 }
 
+.tickets .info {
+  display: flex;
+  flex-direction: column;
+  gap: 24px; 
+}
+
 .success-button button {
   margin-top: 62px;
 }
