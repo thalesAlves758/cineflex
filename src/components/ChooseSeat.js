@@ -9,7 +9,7 @@ import Seat from "./Seat";
 import Footer from "./Footer";
 import ReservationInfo from "./ReservationInfo";
 
-const ELEVEN = 11;
+import cpfMask from './utilities/cpfMask';
 
 function ReservationForm ({ name, setName, cpf, setCpf, reserve }) {
   function handleNameInput(event) {
@@ -17,20 +17,18 @@ function ReservationForm ({ name, setName, cpf, setCpf, reserve }) {
   }
 
   function handleCpfInput(event) {
-    const onlyNumberRegex = /^[0-9]+$/;
-    const { value } = event.target;
-
-    const isValidValue = () => (value === '' || onlyNumberRegex.test(value)) && value.length <= ELEVEN;
-    
-    if(isValidValue()) {
-      setCpf(value);
-    }
+    setCpf(cpfMask(event.target.value));
   }
 
   function handleSubmit(event) {
     event.preventDefault();
+
+    setCpf(removeCpfMask(cpf));
+
     reserve();
   }
+
+  const removeCpfMask = value => value.replaceAll('.', '').replaceAll('-', '');
 
   return (
     <div className="reservation-form">
@@ -100,11 +98,10 @@ export default function ChooseSeat ({ setReservation }) {
     const ids = selectedSeats.map(seat => seat.id);
     const seats = selectedSeats.map(seat => seat.name);
 
-    setReservation({ movie, session, seats, name, cpf });
-
     axios
-      .post('https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many', { ids, name, cpf })
-      .then(() => {
+    .post('https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many', { ids, name, cpf })
+    .then(() => {
+        setReservation({ movie, session, seats, name, cpf });
         navigate('/sucesso', { replace: true });
       });
   }
